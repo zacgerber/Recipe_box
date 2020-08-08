@@ -1,0 +1,16 @@
+<div class="container">
+
+    {% if not post %}
+        <h1>The Author you are looking for does not exist!</h1>
+    {% else %}
+        <h2>{{ post.name  }}</h2>
+        <h4>{{ post.Bio }}</h4>
+            {% for recipe in recipes %}
+        <ul>
+            <li>
+                <a href="/post/{{ post.id }}/">{{ recipe.title }}</a>
+            </li>
+        </ul>
+            {% endfor %}
+    {% endif %}
+</div>

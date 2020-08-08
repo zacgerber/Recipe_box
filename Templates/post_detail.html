@@ -1,0 +1,11 @@
+<div class="container">
+    {% if not post %}
+        <h1>The post you are looking for does not exist!</h1>
+    {% else %}
+        <h2>{{ post.title }}</h2>
+        <li>
+        <a href='/author/{{ post.author.id }}/'>{{ post.author }}</a>
+        </li>
+        <p>{{ post.body }}</p>
+    {% endif %}
+</div>
