@@ -2,6 +2,7 @@
 
 <div class="container">
     <h1>Recipe {{ welcome_name }}!</h1>
+    <h2>Am I authenticated? {{ request.user.is_authenticated }}</h2>
 
     <ul>
     {% for post in recipes %}
