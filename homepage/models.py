@@ -15,6 +15,8 @@ class Author(models.Model):
 
 class Profile(models.Model):
     pass
+    # name = models.CharField(max_length=80)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class Recipe(models.Model):

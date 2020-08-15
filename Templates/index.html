@@ -11,14 +11,11 @@
         </li>
     {% endfor %}
     </ul>
-    <a href="/newauthor/"><input
-            class="AuthorForm"
-           type="button"
-            value="add Author">
-    </a>
-    <a href="/newrecipe/"><input
-            class="RecipeForm"
-           type="button"
-           value="add Recipe">
-    </a>
+    {% if request.user.is_staff %}
+    <a href="/addauthor/"><input class="AuthorForm" type="button" value="add Author"></a>
+    {% endif %}
+    <a href="/addrecipe/"><input class="RecipeForm" type="button" value="add Recipe"></a>
+    <a href="/login/"><input type="button" value="login"></a>
+    <a href="/logout/"><input type="button" value="logout"></a>
+    <a href="/signup/"><input type="button" value="signup"></a>
 </div>
