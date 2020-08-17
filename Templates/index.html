@@ -11,9 +11,9 @@
         </li>
     {% endfor %}
     </ul>
-    {% if request.user.is_staff %}
+{#    {% if request.user.is_staff %}#}
     <a href="/addauthor/"><input class="AuthorForm" type="button" value="add Author"></a>
-    {% endif %}
+{#    {% endif %}#}
     <a href="/addrecipe/"><input class="RecipeForm" type="button" value="add Recipe"></a>
     <a href="/login/"><input type="button" value="login"></a>
     <a href="/logout/"><input type="button" value="logout"></a>
