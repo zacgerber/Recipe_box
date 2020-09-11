@@ -13,5 +13,13 @@
         </ul>
             {% endfor %}
     {% endif %}
+    <h3>My Favorite Recipes</h3>
+    <ul>
+            {%for r in favoriterecipes%}
+    <li>
+        <a href="/post/{{ r.id }}/">{{ r.title }}</a>
+    </li>
+    {%endfor%}
+    </ul>
     <a href="/"><input type="button" value="homepage"></a>
 </div>
