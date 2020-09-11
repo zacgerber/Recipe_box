@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect, reverse, HttpResponse
+from django.shortcuts import render, HttpResponseRedirect, reverse, HttpResponse, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -19,15 +19,20 @@ def index(request):
 
 def post_detail(request, post_id):
     html = "post_detail.html"
-    my_recipes = Recipe.objects.filter(id=post_id).first()
+    my_recipes = Recipe.objects.get(id=post_id)
     return render(request, html, {"post": my_recipes})
 
 
 def author_detail(request, post_id):
     html = "author_detail.html"
     my_author = Author.objects.filter(id=post_id).first()
+    fav_list = []
+    for recipe in my_author.favorites.all():
+        fav_list.append(recipe.id)
+    favoriterecipes = Recipe.objects.filter(id__in=fav_list)
     my_recipe = Recipe.objects.filter(author=my_author.id)
-    return render(request, html, {"post": my_author, "recipes": my_recipe})
+    return render(request, html, {"post": my_author, "recipes": my_recipe, 'favoriterecipes': favoriterecipes})
+
 
 
 @login_required
@@ -48,6 +53,34 @@ def recipe_form_view(request):
 
     form = RecipeForm()
     return render(request, "basic_form.html", {"form": form})
+
+def edit_recipe_view(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    if request.method == "POST":
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            recipe.title=data.get('title')
+            recipe.body=data.get('body')
+            recipe.instructions=data.get('instructions')
+            recipe.time_required=data.get('time_required')
+            recipe.save()
+            return HttpResponseRedirect(reverse("homepage"))
+            # return HttpResponseRedirect(reverse("recipeview", args=[new_recipe.id]))
+    data = {
+        'title': recipe.title,
+        'body': recipe.body,
+        'instructions': recipe.instructions,
+        'time_required': recipe.time_required,
+
+    }
+    form = RecipeForm(initial=data)
+    return render(request, "basic_form.html", {"form": form})
+
+def add_favorites_view(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    request.user.author.favorites.add(recipe)
+    return redirect('/post/' + str(recipe_id) + '/')
 
 
 @login_required

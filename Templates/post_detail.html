@@ -11,6 +11,12 @@
         <p>{{ post.instructions }}</p>
         <h4>{{ post.time_required }}</h4>
     {% endif %}
+    {%if request.user.is_authenticated%}
+    <a href="/add_favorites/{{ post.id }}/"><input type="button" value= "Add To Favorites"></a>
+    {%endif%}
+    {%if request.user.author == post.author or request.user.is_staff%}
+    <a href="/edit_recipe/{{ post.id }}/"><input type="button" value=" Edit Recipe"></a>
+    {%endif%}
     <a href="/"><input
            type="button"
            value="homepage">
